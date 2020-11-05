@@ -4,7 +4,6 @@ window.onload = () => {
   const newTodoInput = document.querySelector(".new-todo");
   const todoList = document.querySelector(".todo-list");
   //   const btnDelete = document.querySelectorAll(".destroy");
-  //   const checkbox = document.querySelectorAll(".toggle");
   const todoCountElt = document.querySelector("#todo-count");
 
   //Fonctions
@@ -30,6 +29,7 @@ window.onload = () => {
 
     //On compte le nombre d'éléments qui ne sont pas complétés
     displayNotCompleted();
+    activerCheckBox();
   };
 
   //On compte le nombre d'éléments qui ne sont pas complétés
@@ -38,6 +38,13 @@ window.onload = () => {
       "li:not(.completed)"
     ).length;
   };
+
+  let toggleItem = (item) => {
+    item.parentElement.classList.toggle("completed");
+    displayNotCompleted();
+  };
+
+  //CAPTURE DES EVENEMENTS
   //   // Suppression d'un élément
   //   for (const btn of btnDelete) {
   //     btn.addEventListener("click", () => {
@@ -45,12 +52,15 @@ window.onload = () => {
   //     });
   //   }
 
-  // //  Texte barré quand checkbox coché
-  //   for (const check of checkbox) {
-  //     check.addEventListener("click", () => {
-  //       check.parentElement.classList.toggle("completed");
-  //     });
-  //   }
+  let activerCheckBox = () => {
+    const toggleInputs = document.querySelectorAll(".toggle");
+    //  Texte barré quand checkbox coché
+    for (const check of toggleInputs) {
+      check.onclick = () => {
+        toggleItem(check);
+      };
+    }
+  };
 
   //Capture des évènements
   newTodoInput.addEventListener("keyup", function (e) {
@@ -58,6 +68,8 @@ window.onload = () => {
       addItem(newTodoInput);
     }
   });
+
   //lancement au chargement de la page
   displayNotCompleted();
+  activerCheckBox();
 };
