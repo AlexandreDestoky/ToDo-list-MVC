@@ -30,6 +30,7 @@ window.onload = () => {
     //On compte le nombre d'éléments qui ne sont pas complétés
     displayNotCompleted();
     activerCheckBox();
+    activerItems();
   };
 
   //On compte le nombre d'éléments qui ne sont pas complétés
@@ -44,6 +45,13 @@ window.onload = () => {
     displayNotCompleted();
   };
 
+  let editItem = (item) => {
+    const value = item.querySelector("label").innerText;
+    item.querySelector(
+      "label"
+    ).innerHTML = `<input type="text" value="${value}">`;
+  };
+
   //CAPTURE DES EVENEMENTS
   //   // Suppression d'un élément
   //   for (const btn of btnDelete) {
@@ -52,6 +60,16 @@ window.onload = () => {
   //     });
   //   }
 
+  //Capture des évènements
+
+  //Quand on fait Enter dans l'input on ajout l'item
+  newTodoInput.addEventListener("keyup", function (e) {
+    if (e.key === "Enter") {
+      addItem(newTodoInput);
+    }
+  });
+
+  //Lorque l'on clique sur une chekcbox .toggle
   let activerCheckBox = () => {
     const toggleInputs = document.querySelectorAll(".toggle");
     //  Texte barré quand checkbox coché
@@ -62,14 +80,20 @@ window.onload = () => {
     }
   };
 
-  //Capture des évènements
-  newTodoInput.addEventListener("keyup", function (e) {
-    if (e.key === "Enter") {
-      addItem(newTodoInput);
+  let activerItems = () => {
+    //lorsque l'on double clique sur un .listItem:not(.completed)
+    const itemsNotCompleted = todoList.querySelectorAll(
+      ".listItem:not(.completed)"
+    );
+    for (const itemNotCompleted of itemsNotCompleted) {
+      itemNotCompleted.ondblclick = () => {
+        editItem(itemNotCompleted);
+      };
     }
-  });
+  };
 
   //lancement au chargement de la page
   displayNotCompleted();
   activerCheckBox();
+  activerItems();
 };
