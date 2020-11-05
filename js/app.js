@@ -3,10 +3,13 @@ window.onload = () => {
   //Selection des élements
   const newTodoInput = document.querySelector(".new-todo");
   const todoList = document.querySelector(".todo-list");
-  const btnDelete = document.querySelectorAll(".destroy");
-  const checkbox = document.querySelectorAll(".toggle");
+  //   const btnDelete = document.querySelectorAll(".destroy");
+  //   const checkbox = document.querySelectorAll(".toggle");
+  const todoCountElt = document.querySelector("#todo-count");
 
   //Fonctions
+
+  //Ajout d'un item
   let addItem = (item) => {
     const newLi = document.createElement("li");
     newLi.classList.add("listItem");
@@ -24,8 +27,17 @@ window.onload = () => {
     });
     //Vider le champ de texte
     item.value = "";
+
+    //On compte le nombre d'éléments qui ne sont pas complétés
+    displayNotCompleted();
   };
 
+  //On compte le nombre d'éléments qui ne sont pas complétés
+  let displayNotCompleted = () => {
+    todoCountElt.innerText = todoList.querySelectorAll(
+      "li:not(.completed)"
+    ).length;
+  };
   //   // Suppression d'un élément
   //   for (const btn of btnDelete) {
   //     btn.addEventListener("click", () => {
@@ -42,11 +54,10 @@ window.onload = () => {
 
   //Capture des évènements
   newTodoInput.addEventListener("keyup", function (e) {
-    // if (e.key == "Enter") {
-    //   alert(this.value);
-    // }
     if (e.key === "Enter") {
       addItem(newTodoInput);
     }
   });
+  //lancement au chargement de la page
+  displayNotCompleted();
 };
