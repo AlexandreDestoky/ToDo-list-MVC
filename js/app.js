@@ -66,6 +66,18 @@ window.onload = () => {
     }, 300);
   };
 
+  function filterItems(filterBtn) {
+    const filter = filterBtn.dataset.filter; // .all, .completed, :not(.completed)
+    const items = document.querySelectorAll(".listItem");
+    for (let item of items) {
+      if (item.matches(filter)) {
+        item.classList.remove("cache");
+      } else {
+        item.classList.add("cache");
+      }
+    }
+  }
+
   //Capture des évènements
 
   //Quand on fait Enter dans l'input on ajout l'item
@@ -123,6 +135,14 @@ window.onload = () => {
       };
     }
   };
+
+  //Lorsque l'on clique sur un .filters
+  const filterBtns = document.querySelectorAll(".filter");
+  for (let filterBtn of filterBtns) {
+    filterBtn.onclick = () => {
+      filterItems(filterBtn);
+    };
+  }
 
   //lancement au chargement de la page
   displayNotCompleted();
