@@ -66,7 +66,7 @@ window.onload = () => {
     }, 300);
   };
 
-  function filterItems(filterBtn) {
+  let filterItems = (filterBtn) => {
     const filter = filterBtn.dataset.filter; // .all, .completed, :not(.completed)
     const items = document.querySelectorAll(".listItem");
     for (let item of items) {
@@ -76,7 +76,14 @@ window.onload = () => {
         item.classList.add("cache");
       }
     }
-  }
+  };
+
+  let deleteAllCompleted = () => {
+    const itemsCompleted = document.querySelectorAll(".completed label");
+    for (let itemCompleted of itemsCompleted) {
+      deleteItem(itemCompleted);
+    }
+  };
 
   //Capture des évènements
 
@@ -144,6 +151,10 @@ window.onload = () => {
     };
   }
 
+  // Lorsque l'on clique sur le .clear-completed
+  document.querySelector(".clear-completed").onclick = () => {
+    deleteAllCompleted();
+  };
   //lancement au chargement de la page
   displayNotCompleted();
   activerCheckBox();
