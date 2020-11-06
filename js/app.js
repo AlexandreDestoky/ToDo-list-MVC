@@ -46,10 +46,15 @@ window.onload = () => {
   };
 
   let editItem = (item) => {
-    const value = item.querySelector("label").innerText;
-    item.querySelector(
-      "label"
-    ).innerHTML = `<input type="text" value="${value}">`;
+    const value = item.innerText;
+    item.innerHTML = `<input type="text" value="${value}" class="editInput"  />`;
+    item.focus();
+    activerInputs();
+  };
+
+  let updateItem = (item) => {
+    const value = item.value;
+    item.parentElement.innerHTML = value;
   };
 
   //CAPTURE DES EVENEMENTS
@@ -80,14 +85,29 @@ window.onload = () => {
     }
   };
 
+  //lorsque l'on double clique sur un label qui est dans un .listItem:not(.completed)
   let activerItems = () => {
-    //lorsque l'on double clique sur un .listItem:not(.completed)
     const itemsNotCompleted = todoList.querySelectorAll(
-      ".listItem:not(.completed)"
+      ".listItem:not(.completed) label"
     );
     for (const itemNotCompleted of itemsNotCompleted) {
       itemNotCompleted.ondblclick = () => {
         editItem(itemNotCompleted);
+      };
+    }
+  };
+
+  //Lorsque je tape "Enter" dans un input.edit
+  let activerInputs = () => {
+    const editInputs = document.querySelectorAll(".editInput");
+    for (const editInput of editInputs) {
+      editInput.onkeyup = (e) => {
+        if (e.key === "Enter") {
+          updateItem(editInput);
+        }
+      };
+      editInput.onblur = () => {
+        updateItem(editInput);
       };
     }
   };
