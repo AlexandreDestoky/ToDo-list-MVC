@@ -20,7 +20,7 @@ window.onload = () => {
 
     //On insère le newLi au début de la todoList avec un slideDown
     todoList.prepend(newLi);
-    setTimeout(function () {
+    setTimeout(() => {
       newLi.classList.remove("cache");
     });
     //Vider le champ de texte
@@ -88,8 +88,8 @@ window.onload = () => {
   //Capture des évènements
 
   //Quand on fait Enter dans l'input on ajout l'item
-  newTodoInput.addEventListener("keyup", function (e) {
-    if (e.key === "Enter") {
+  newTodoInput.addEventListener("keyup", (e) => {
+    if (e.key === "Enter" && newTodoInput.value != "") {
       addItem(newTodoInput);
     }
   });
@@ -143,11 +143,18 @@ window.onload = () => {
     }
   };
 
-  //Lorsque l'on clique sur un .filters
+  // Lorsque l'on clique sur un .filter
   const filterBtns = document.querySelectorAll(".filter");
   for (let filterBtn of filterBtns) {
-    filterBtn.onclick = () => {
-      filterItems(filterBtn);
+    filterBtn.onclick = function () {
+      // Je supprime le .selected aux .filter
+      filterBtns.forEach(function (filterLink) {
+        filterLink.classList.remove("selected");
+      });
+
+      // J'ajoute un .selected au .filter sur lequel je clique
+      this.classList.add("selected");
+      filterItems(this);
     };
   }
 
