@@ -3,7 +3,6 @@ window.onload = () => {
   //Selection des élements
   const newTodoInput = document.querySelector(".new-todo");
   const todoList = document.querySelector(".todo-list");
-  //   const btnDelete = document.querySelectorAll(".destroy");
   const todoCountElt = document.querySelector("#todo-count");
 
   //Fonctions
@@ -31,6 +30,7 @@ window.onload = () => {
     displayNotCompleted();
     activerCheckBox();
     activerItems();
+    activerDeleteBtns();
   };
 
   //On compte le nombre d'éléments qui ne sont pas complétés
@@ -57,13 +57,14 @@ window.onload = () => {
     item.parentElement.innerHTML = value;
   };
 
-  //CAPTURE DES EVENEMENTS
-  //   // Suppression d'un élément
-  //   for (const btn of btnDelete) {
-  //     btn.addEventListener("click", () => {
-  //       btn.parentElement.remove();
-  //     });
-  //   }
+  //suppresion avec slidedown
+  let deleteItem = (item) => {
+    item.parentElement.classList.add("cache");
+    setTimeout(() => {
+      item.parentElement.remove();
+      displayNotCompleted();
+    }, 300);
+  };
 
   //Capture des évènements
 
@@ -112,8 +113,20 @@ window.onload = () => {
     }
   };
 
+  let activerDeleteBtns = () => {
+    // lorsque l'on clique sur un bouton .destroy
+    const deleteBtns = document.querySelectorAll(".destroy");
+    // Suppression d'un élément
+    for (const deleteBtn of deleteBtns) {
+      deleteBtn.onclick = () => {
+        deleteItem(deleteBtn);
+      };
+    }
+  };
+
   //lancement au chargement de la page
   displayNotCompleted();
   activerCheckBox();
   activerItems();
+  activerDeleteBtns();
 };
